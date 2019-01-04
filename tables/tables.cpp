@@ -1,5 +1,6 @@
 #include <algorithm>
 #include <iostream>
+#include <fstream>
 #include <vector>
 #include <cmath>
 #include <cstdlib>
@@ -76,6 +77,8 @@ int main() {
   do {
     reload = 0;
 
+    std::ofstream file("./tables.csv");
+
     std::set<std::pair<int,int> > operations;
 
     while (operations.size() < nb_calc) {
@@ -117,48 +120,50 @@ int main() {
     std::cout << std::endl;
     std::cout << "============================================================" << std::endl;
     std::cout << " Calculs formatés à copier et coller dans Word :" << std::endl;
-    std::cout << "   1. Insertion > Tableau > Convertir le texte en tableau" << std::endl;
-    std::cout << "   2. Sélectionner le séparateur \";\"" << std::endl;
+    std::cout << "   1. Copier/coller le contenu du fichier \"tables.csv\"" << std::endl;
+    std::cout << "   2. Insertion > Tableau > Convertir le texte en tableau" << std::endl;
+    std::cout << "   3. Sélectionner le séparateur \";\"" << std::endl;
     std::cout << "============================================================" << std::endl;
-    std::cout << nb_calc << " calculs en ___ minute(s) !" << std::endl;
-    std::cout << "Tables de " << StrList(tables) << "." << std::endl;
-    std::cout << std::endl;
+
+    file << nb_calc << " calculs en ___ minute(s) !" << std::endl;
+    file << "Tables de " << StrList(tables) << "." << std::endl;
+    file << std::endl;
 
     for (int i = 0; i < width * height; ++i) {
       if (i > 0 && i % width == 0)
-        std::cout << std::endl;
+        file << std::endl;
 
       if (i < nb_calc) {
-        std::cout << left[i] << " ; x ; " << right[i] << " ; = ; _____";
+        file << left[i] << " ; x ; " << right[i] << " ; = ; _____";
       } else {
-        std::cout << "; ; ; ;";
+        file << "; ; ; ;";
       }
 
       if ((i + 1) % width != 0)
-        std::cout << " ; ; ";
+        file << " ; ; ";
     }
 
-    std::cout << std::endl;
-    std::cout << std::endl;
-    std::cout << "Correction" << std::endl;
-    std::cout << std::endl;
+    file << std::endl;
+    file << std::endl;
+    file << "Correction" << std::endl;
+    file << std::endl;
 
     for (int i = 0; i < width * height; ++i) {
       if (i > 0 && i % width == 0)
-        std::cout << std::endl;
+        file << std::endl;
 
       if (i < nb_calc) {
-        std::cout << left[i] << " ; x ; " << right[i] << " ; = ; " << (left[i] * right[i]);
+        file << left[i] << " ; x ; " << right[i] << " ; = ; " << (left[i] * right[i]);
       } else {
-        std::cout << "; ; ; ;";
+        file << "; ; ; ;";
       }
 
       if ((i + 1) % width != 0)
-        std::cout << " ; ; ";
+        file << " ; ; ";
     }
 
-    std::cout << std::endl;
-    std::cout << "============================================================" << std::endl;
+    file << std::endl;
+
 
     std::cout << "Recharger (o/n) ? ";
     char c;
