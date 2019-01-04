@@ -52,6 +52,14 @@ std::string StrList(const std::vector<int>& list) {
 
 int main() {
 
+  std::cout << "============================================================" << std::endl;
+  std::cout << " Calculs formatés à copier/coller dans Word :" << std::endl;
+  std::cout << "   1. Générer des tables de multiplication" << std::endl;
+  std::cout << "   2. Copier/coller le contenu du fichier \"tables.csv\" généré" << std::endl;
+  std::cout << "   3. Word : Insertion > Tableau > Convertir le texte en tableau" << std::endl;
+  std::cout << "   4. Sélectionner le séparateur \";\"" << std::endl;
+  std::cout << "============================================================" << std::endl;
+
   int nb_tables = 0;
   std::cout << "Nombre de tables : ";
   std::cin >> nb_tables;
@@ -118,14 +126,8 @@ int main() {
     }
 
     std::cout << std::endl;
-    std::cout << "============================================================" << std::endl;
-    std::cout << " Calculs formatés à copier et coller dans Word :" << std::endl;
-    std::cout << "   1. Copier/coller le contenu du fichier \"tables.csv\"" << std::endl;
-    std::cout << "   2. Insertion > Tableau > Convertir le texte en tableau" << std::endl;
-    std::cout << "   3. Sélectionner le séparateur \";\"" << std::endl;
-    std::cout << "============================================================" << std::endl;
 
-    file << nb_calc << " calculs en ___ minute(s) !" << std::endl;
+    file << nb_calc << " calculs en ___ minutes !" << std::endl;
     file << "Tables de " << StrList(tables) << "." << std::endl;
     file << std::endl;
 
@@ -134,13 +136,13 @@ int main() {
         file << std::endl;
 
       if (i < nb_calc) {
-        file << left[i] << " ; x ; " << right[i] << " ; = ; _____";
+        file << left[i] << ";x;" << right[i] << ";=;___";
       } else {
-        file << "; ; ; ;";
+        file << ";;;;";
       }
 
       if ((i + 1) % width != 0)
-        file << " ; ; ";
+        file << ";;";
     }
 
     file << std::endl;
@@ -153,13 +155,13 @@ int main() {
         file << std::endl;
 
       if (i < nb_calc) {
-        file << left[i] << " ; x ; " << right[i] << " ; = ; " << (left[i] * right[i]);
+        file << left[i] << ";x;" << right[i] << ";=;" << (left[i] * right[i]);
       } else {
-        file << "; ; ; ;";
+        file << ";;;;";
       }
 
       if ((i + 1) % width != 0)
-        file << " ; ; ";
+        file << ";;";
     }
 
     file << std::endl;
