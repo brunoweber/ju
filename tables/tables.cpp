@@ -63,7 +63,7 @@ int main() {
   std::cout << "============================================================" << std::endl;
   std::cout << " Calculs formatés à copier/coller dans Word :" << std::endl;
   std::cout << "   1. Générer des tables de multiplication" << std::endl;
-  std::cout << "   2. Copier/coller le contenu du fichier \"tables.csv\" généré" << std::endl;
+  std::cout << "   2. Copier/coller le contenu du fichier \"tables.txt\" généré" << std::endl;
   std::cout << "   3. Word : Insertion > Tableau > Convertir le texte en tableau" << std::endl;
   std::cout << "   4. Sélectionner le séparateur \";\"" << std::endl;
   std::cout << "============================================================" << std::endl;
@@ -93,7 +93,7 @@ int main() {
   do {
     reload = 0;
 
-    std::ofstream file("./tables.csv");
+    std::ofstream file("./tables.txt");
 
     std::set<std::pair<int,int> > operations;
 
