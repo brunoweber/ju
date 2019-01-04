@@ -93,39 +93,71 @@ int main() {
     operations.clear();
 
     std::cout << "============================================================" << std::endl;
-    std::cout << "\t\t" << nb_calc << " calculs en ___ minute(s) !" << std::endl;
-    std::cout << "\t\tTables de " << StrList(tables) << "." << std::endl;
+    std::cout << " Calculs proposés :" << std::endl;
+    std::cout << "============================================================" << std::endl;
 
     std::vector<int> left;
     std::vector<int> right;
-    for (int i = 0; i < height; ++i) {
-      for (int j = 0; j < width; ++j) {
-        if (i * width + j == nb_calc) break;
+    for (int i = 0; i < nb_calc; ++i) {
+      if (i > 0 && i % width == 0)
+        std::cout << std::endl;
 
-        int id = (double)std::rand() / RAND_MAX * sorted_operations.size();
-        if (id >= sorted_operations.size()) id = sorted_operations.size() - 1;
-        std::vector<std::pair<int,int> >::iterator it = sorted_operations.begin() + id;
-        std::cout << it->first << " x " << it->second << " = _____\t";
-        left.push_back(it->first);
-        right.push_back(it->second);
-        sorted_operations.erase(it);
-      }
-      std::cout << std::endl;
+      int id = (double)std::rand() / RAND_MAX * sorted_operations.size();
+      if (id >= sorted_operations.size()) id = sorted_operations.size() - 1;
+
+      std::vector<std::pair<int,int> >::iterator it = sorted_operations.begin() + id;
+      std::cout << it->first << " x " << it->second << '\t';
+
+      left.push_back(it->first);
+      right.push_back(it->second);
+
+      sorted_operations.erase(it);
     }
 
     std::cout << std::endl;
+    std::cout << "============================================================" << std::endl;
+    std::cout << " Calculs formatés à copier et coller dans Word :" << std::endl;
+    std::cout << "   1. Insertion > Tableau > Convertir le texte en tableau" << std::endl;
+    std::cout << "   2. Sélectionner le séparateur \";\"" << std::endl;
+    std::cout << "============================================================" << std::endl;
+    std::cout << nb_calc << " calculs en ___ minute(s) !" << std::endl;
+    std::cout << "Tables de " << StrList(tables) << "." << std::endl;
+    std::cout << std::endl;
 
-    std::cout << "\t\tCorrection :" << std::endl;
-    for (int i = 0; i < height; ++i) {
-      for (int j = 0; j < width; ++j) {
-        if (i * width + j == nb_calc) break;
+    for (int i = 0; i < width * height; ++i) {
+      if (i > 0 && i % width == 0)
+        std::cout << std::endl;
 
-        int id = i * width + j;
-        std::cout << left[id] << " x " << right[id] << " = " << (left[id] * right[id]) << "\t";
+      if (i < nb_calc) {
+        std::cout << left[i] << " ; x ; " << right[i] << " ; = ; _____";
+      } else {
+        std::cout << "; ; ; ;";
       }
-      std::cout << std::endl;
+
+      if ((i + 1) % width != 0)
+        std::cout << " ; ; ";
     }
 
+    std::cout << std::endl;
+    std::cout << std::endl;
+    std::cout << "Correction" << std::endl;
+    std::cout << std::endl;
+
+    for (int i = 0; i < width * height; ++i) {
+      if (i > 0 && i % width == 0)
+        std::cout << std::endl;
+
+      if (i < nb_calc) {
+        std::cout << left[i] << " ; x ; " << right[i] << " ; = ; " << (left[i] * right[i]);
+      } else {
+        std::cout << "; ; ; ;";
+      }
+
+      if ((i + 1) % width != 0)
+        std::cout << " ; ; ";
+    }
+
+    std::cout << std::endl;
     std::cout << "============================================================" << std::endl;
 
     std::cout << "Recharger (o/n) ? ";
