@@ -27,7 +27,8 @@ std::string StrList(const std::vector<int>& list) {
 
     for (int i = 0; i < groups.size(); ++i) {
       if (i != 0) {
-        if (i == groups.size() - 1) {
+        if (i == groups.size() - 1 && groups[i].size() != 2) {
+          // before last group, if 1 or more than 2 numbers in last group
           s += " et ";
         } else {
           s += ", ";
@@ -35,12 +36,19 @@ std::string StrList(const std::vector<int>& list) {
       }
 
       if (groups[i].size() > 2) {
+        // more than 2 numbers in group
         s += std::to_string(groups[i][0]) + " à " + std::to_string(groups[i].back());
-      } else if (groups[i].size() > 1 && groups.size() == 1) {
-        s += std::to_string(groups[i][0]) + " et " + std::to_string(groups[i].back());
       } else if (groups[i].size() > 1) {
-        s += std::to_string(groups[i][0]) + ", " + std::to_string(groups[i].back());
+        // 2 numbers in group and...
+        if (i == groups.size() - 1) {
+          // ... last group
+          s += std::to_string(groups[i][0]) + " et " + std::to_string(groups[i].back());
+        } else {
+          // ... not last group
+          s += std::to_string(groups[i][0]) + ", " + std::to_string(groups[i].back());
+        }
       } else {
+        // 1 number in group
         s += std::to_string(groups[i][0]);
       }
     }
@@ -127,22 +135,21 @@ int main() {
 
     std::cout << std::endl;
 
-    file << nb_calc << " calculs en ___ minutes !" << std::endl;
-    file << "Tables de " << StrList(tables) << "." << std::endl;
+    // Write to file
+
+    file << nb_calc << " calcul" << (nb_calc > 1 ? "s" : "") << " en ___ minutes !" << std::endl;
+    file << "Table" << (nb_tables > 1 ? "s" : "") << " de " << StrList(tables) << "." << std::endl;
     file << std::endl;
 
     for (int i = 0; i < width * height; ++i) {
       if (i > 0 && i % width == 0)
         file << std::endl;
 
-      if (i < nb_calc) {
-        file << left[i] << ";x;" << right[i] << ";=;___";
-      } else {
-        file << ";;;;";
-      }
+      if (i < nb_calc)
+        file << left[i] << " x " << right[i] << " = ___";
 
       if ((i + 1) % width != 0)
-        file << ";;";
+        file << ";";
     }
 
     file << std::endl;
@@ -154,18 +161,16 @@ int main() {
       if (i > 0 && i % width == 0)
         file << std::endl;
 
-      if (i < nb_calc) {
-        file << left[i] << ";x;" << right[i] << ";=;" << (left[i] * right[i]);
-      } else {
-        file << ";;;;";
-      }
+      if (i < nb_calc)
+        file << left[i] << " x " << right[i] << " = " << (left[i] * right[i]);
 
       if ((i + 1) % width != 0)
-        file << ";;";
+        file << ";";
     }
 
     file << std::endl;
 
+    // Reloader
 
     std::cout << "Recharger (o/n) ? ";
     char c;
